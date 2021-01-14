@@ -196,14 +196,14 @@ class MapViewController: UIViewController,MKMapViewDelegate,CLLocationManagerDel
             let center = mapView.convert(tapPoint, toCoordinateFrom: mapView)
             
             //numaberをもとに半径を指定
-            if number == 0{
+            if number == 1{
                 radius = 400
-            }else if number == 1{
-                radius = 800
             }else if number == 2{
-                radius = 1200
+                radius = 800
             }else if number == 3{
                 radius = 1200
+            }else if number == 4{
+                radius = 1600
             }
             
             let circle = MKCircle(center: center, radius: CLLocationDistance(radius)) //半径100m　1分＝80m

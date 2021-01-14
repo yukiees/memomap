@@ -46,11 +46,7 @@ class PreserveViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     @IBAction func sharemapButtonTapped(_ sender: Any){
-//        if sharemapbutton.imageView?.image == image2{
-//            sharemapbutton.setImage(image3, for: .normal)
-//        }else if sharemapbutton.imageView?.image == image3{
-//            sharemapbutton.setImage(image2, for: .normal)
-//        }
+
         shareMap()
         
     }
@@ -269,7 +265,7 @@ class PreserveViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         //テストlat,lot = 36.030354, 138.120793
         
         let urlString = "http://maps.apple.com/?address=\(address)"
-//        let urlString = "myapplication://first/?param1=\(latitude)&param2=\(longitude)"
+        //let urlString = "myapplication://first/?param1=\(latitude)&param2=\(longitude)"
         //マップの種類の変更可(&t = m or k or h or r)
         
         let encodedUrl = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
