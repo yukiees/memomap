@@ -31,22 +31,28 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     @IBOutlet weak var searchbutton: UIButton!
     
     @IBAction func searchButtonTapped() {
-        let mapViewController = presentingViewController as? MapViewController
+        let mapViewController = presentingViewController as! MapViewController
         //徒歩何分圏内かによってそれぞれnumberに判定値を代入
         if textField3.text == data6[0]{
-            mapViewController?.number = 1
+            mapViewController.number = 1
         }else if textField3.text == data6[1]{
-            mapViewController?.number = 2
+            mapViewController.number = 2
         }else if textField3.text == data6[2]{
-            mapViewController?.number = 3
+            mapViewController.number = 3
         }else if textField3.text == data6[3]{
-            mapViewController?.number = 4
+            mapViewController.number = 4
         }
         
         //MapViewControllerのradiusBoolにtureを代入
-        mapViewController?.radiusBool = true
+        mapViewController.radiusBool = true
         
-        self.dismiss(animated: true, completion: nil)
+        
+        if textField1.text == "" || textField2.text == "" || textField3.text == ""{
+            alert()
+        }else{
+            self.dismiss(animated: true, completion: nil)
+        }
+        
         
     }
     
@@ -200,6 +206,21 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                     
                 }
             }
+        
+    }
+    
+    func alert(){
+        let alert = UIAlertController(title: "タイトル", message: "本文", preferredStyle: .alert)
+        alert.addAction(
+            UIAlertAction(
+                title: "OK",
+                style: .default,
+                handler: { action in
+                    print("OK")
+                }
+            )
+        )
+        present(alert, animated: true, completion: nil)
         
     }
 

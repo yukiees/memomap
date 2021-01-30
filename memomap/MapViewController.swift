@@ -22,6 +22,7 @@ class MapViewController: UIViewController,MKMapViewDelegate,CLLocationManagerDel
     var number = Int()
     var loadLatitude = Double()
     var loadLongitude = Double()
+    var loaded: Bool = false
     
     // ピンを生成
     let myPin = MKPointAnnotation()
@@ -174,12 +175,14 @@ class MapViewController: UIViewController,MKMapViewDelegate,CLLocationManagerDel
         }
     }
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        let preserveVC = segue.destination as! PreserveViewController
-//        preserveVC.latitude = self.myPin.coordinate.latitude
-//        preserveVC.longitude = self.myPin.coordinate.longitude
-//        
-//    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "next"{
+            let preserveVC = segue.destination as! PreserveViewController
+            preserveVC.latitude = self.myPin.coordinate.latitude
+            preserveVC.longitude = self.myPin.coordinate.longitude
+        }
+        
+    }
     
     @objc func buttonEvent(_ sender: UIButton) {
         self.performSegue(withIdentifier: "next", sender: nil)
@@ -206,6 +209,8 @@ class MapViewController: UIViewController,MKMapViewDelegate,CLLocationManagerDel
                 radius = 1600
             }
             
+            print(number)
+            
             let circle = MKCircle(center: center, radius: CLLocationDistance(radius)) //半径100m　1分＝80m
             
             //myMapに徒歩圏内機能を追加
@@ -226,13 +231,12 @@ class MapViewController: UIViewController,MKMapViewDelegate,CLLocationManagerDel
         return circleRenderer
     }
     
-//    func loaded(){
-//        let sceneDelegate = UIApplication.shared.delegate as? SceneDelegate
-//        print(sceneDelegate?.myLatitude)
-//        print("さしすせそ\(sceneDelegate?.myLongitude)")
+//    func loading(){
+//        let sceneDelegate = presentedViewController as? SceneDelegate
+//
+//
+//
 //    }
-    
-    
     
 }
 

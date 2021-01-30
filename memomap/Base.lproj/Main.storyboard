@@ -78,7 +78,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" backgroundImage="虫眼鏡のアイコン.png"/>
                                         <connections>
-                                            <segue destination="xan-gV-cgV" kind="presentation" modalPresentationStyle="fullScreen" id="Et4-Ra-KSb"/>
+                                            <segue destination="xan-gV-cgV" kind="presentation" id="0DG-k5-rUs"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -311,7 +311,7 @@
         <!--Search View Controller-->
         <scene sceneID="vcs-Ut-Lnd">
             <objects>
-                <viewController id="xan-gV-cgV" customClass="SearchViewController" customModule="memomap" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="xan-gV-cgV" customClass="SearchViewController" customModule="memomap" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="L65-Di-PgR">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

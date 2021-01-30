@@ -46,9 +46,12 @@ class PreserveViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     @IBAction func sharemapButtonTapped(_ sender: Any){
-
-        shareMap()
         
+        if sharemapbutton.imageView?.image == image3{
+            shareMap()
+        }else{
+            //何もしない
+        }
     }
     
     
@@ -57,24 +60,36 @@ class PreserveViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     @IBOutlet weak var delatebutton: UIButton!
     
     @IBAction func preserveButtonTapped() {
-        // mapViewControllerの取得
-        if let mapVC = presentingViewController as? MapViewController{
-            //MapViewControllerのgenreにtextfieldの値を代入
-            mapVC.genre = textField3.text!
-            print(textField3.text as Any)
-            print(mapVC.genre)
-            
-            //MapViewControllerのsubtitleにtextfieldの値を代入
-            mapVC.subTitle = textField4.text!
-            print(textField4.text as Any)
-            print(mapVC.subTitle)
-            
-            //MapViewControllerのpinBoolにtureを代入
-            mapVC.pinBool = true
-            
-        }
         
-        self.dismiss(animated: true, completion: nil)
+        if latitude == 0.00{
+            // mapViewControllerの取得
+            if let mapVC = presentingViewController as? MapViewController{
+                //MapViewControllerのgenreにtextfieldの値を代入
+                mapVC.genre = textField3.text!
+                print(textField3.text as Any)
+                print(mapVC.genre)
+                
+                //MapViewControllerのsubtitleにtextfieldの値を代入
+                mapVC.subTitle = textField4.text!
+                print(textField4.text as Any)
+                print(mapVC.subTitle)
+                
+                //MapViewControllerのpinBoolにtrueを代入
+                mapVC.pinBool = true
+                
+            }
+            
+            if textField1.text == "" || textField2.text == "" || textField3.text == "" || textField4.text == ""{
+                alert()
+            }else{
+                self.dismiss(animated: true, completion: nil)
+            }
+        }else{
+            //値が渡されて保存するとき
+            //保存するメソッド(後ほど)
+            
+            self.dismiss(animated: true, completion: nil)
+        }
         
     }
     
@@ -106,8 +121,19 @@ class PreserveViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         preservebutton.layer.cornerRadius = 25.0
         delatebutton.layer.cornerRadius = 25.0
         
+        if latitude != 0.00 {
+            print(latitude)
+            sharemapbutton.setImage(image3, for: .normal)
+            delatebutton.isHidden = false
+            preservebutton.setTitle("保存する", for: .normal)
+        }else{
+            sharemapbutton.setImage(image2, for: .normal)
+            delatebutton.isHidden = true
+            preservebutton.setTitle("ピンを置く", for: .normal)
+        }
         
-        // Do any additional setup after loading the view.
+        
+        
     }
     
     
@@ -261,18 +287,19 @@ class PreserveViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     func shareMap(){
-        let address = NSString(format: "%f,%f", latitude, longitude)
+        let address = String(format: "%f,%f", latitude, longitude)
         //テストlat,lot = 36.030354, 138.120793
         
         let urlString = "http://maps.apple.com/?address=\(address)"
         //let urlString = "myapplication://first/?param1=\(latitude)&param2=\(longitude)"
+        print(address)
         //マップの種類の変更可(&t = m or k or h or r)
         
         let encodedUrl = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-
+        
         let url = NSURL(string: encodedUrl)!
-
-        UIApplication.shared.open(url as URL, options: [UIApplication.OpenExternalURLOptionsKey.universalLinksOnly: true], completionHandler: nil)
+        
+        //UIApplication.shared.open(url as URL, options: [UIApplication.OpenExternalURLOptionsKey.universalLinksOnly: true], completionHandler: nil)
         
         //UIApplication.shared.open(URL(string: encodedUrl)!, options: [:], completionHandler: nil)
         print(latitude)
@@ -290,23 +317,26 @@ class PreserveViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         // 初期化処理
         let activityVC = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
         
-        // 使用しないアクティビティタイプ
-        let excludedActivityTypes = [
-            UIActivity.ActivityType.message,
-            UIActivity.ActivityType.saveToCameraRoll,
-            UIActivity.ActivityType.print
-        ]
-        
-        activityVC.excludedActivityTypes = excludedActivityTypes
         
         // UIActivityViewControllerを表示
         self.present(activityVC, animated: true, completion: nil)
         
     }
+    
+    func alert(){
+        let alert = UIAlertController(title: "タイトル", message: "本文", preferredStyle: .alert)
+        alert.addAction(
+            UIAlertAction(
+                title: "OK",
+                style: .default,
+                handler: { action in
+                    print("OK")
+                }
+            )
+        )
+        present(alert, animated: true, completion: nil)
         
+    }
+    
 }
-
-
-
-
 
