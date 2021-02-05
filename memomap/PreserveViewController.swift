@@ -16,6 +16,11 @@ class PreserveViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     @IBOutlet weak var textField3: UITextField!
     @IBOutlet weak var textField4: UITextField!
     
+    //UserDefaultsの内容
+    var saveMemo: UserDefaults = UserDefaults.standard
+    var memoArray :[String] = []
+    
+    //ここまで
     var pickerView1 = UIPickerView()
     var pickerView2 = UIPickerView()
     var data1 = ["飲食店","観光地","お店","その他"]
@@ -84,6 +89,9 @@ class PreserveViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             }else{
                 self.dismiss(animated: true, completion: nil)
             }
+            
+            preserve()
+            
         }else{
             //値が渡されて保存するとき
             //保存するメソッド(後ほど)
@@ -135,6 +143,17 @@ class PreserveViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        if latitude == 0.00{
+            
+        }else{
+            memoArray = saveMemo.object(forKey: "memo") as! [String]
+            
+            textField1.text = memoArray[0]
+            textField2.text = memoArray[1]
+            textField3.text = memoArray[2]
+            textField4.text = memoArray[3]
+            
+        }
         
     }
     
@@ -341,7 +360,13 @@ class PreserveViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     func preserve(){
-        
+        memoArray.append(textField1.text!)
+        memoArray.append(textField2.text!)
+        memoArray.append(textField3.text!)
+        memoArray.append(textField4.text!)
+        print(memoArray)
+
+        saveMemo.setValue(memoArray, forKey: "memo")
     }
     
 }
