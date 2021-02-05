@@ -132,7 +132,9 @@ class PreserveViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             preservebutton.setTitle("ピンを置く", for: .normal)
         }
         
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         
     }
     
@@ -335,6 +337,10 @@ class PreserveViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             )
         )
         present(alert, animated: true, completion: nil)
+        
+    }
+    
+    func preserve(){
         
     }
     
