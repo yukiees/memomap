@@ -9,6 +9,15 @@
 import UIKit
 import Accounts
 
+// mapUserDefaultsの内容
+var saveMap: UserDefaults = UserDefaults.standard
+var categoryArray :[String] = []
+var genreArray :[String] = []
+var titleArray :[String] = []
+var memoArray :[String] = []
+var latitudeArray :[Double] = []
+var longitudeArray :[Double] = []
+
 class PreserveViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UITextFieldDelegate{
     
     @IBOutlet weak var textField1: UITextField!
@@ -90,11 +99,12 @@ class PreserveViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                 self.dismiss(animated: true, completion: nil)
             }
             
-            preserve()
+            memoPreserve()
             
         }else{
             //値が渡されて保存するとき
-            //保存するメソッド(後ほど)
+            //保存するメソッド
+            mapPreserve()
             
             self.dismiss(animated: true, completion: nil)
         }
@@ -359,7 +369,7 @@ class PreserveViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         
     }
     
-    func preserve(){
+    func memoPreserve(){
         memoArray.append(textField1.text!)
         memoArray.append(textField2.text!)
         memoArray.append(textField3.text!)
@@ -368,6 +378,27 @@ class PreserveViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
 
         saveMemo.setValue(memoArray, forKey: "memo")
     }
+    
+    func mapPreserve(){
+
+        categoryArray.append(textField1.text!)
+        genreArray.append(textField2.text!)
+        titleArray.append(textField3.text!)
+        memoArray.append(textField4.text!)
+        latitudeArray.append(latitude)
+        longitudeArray.append(longitude)
+        
+        saveMap.setValue(categoryArray, forKey: "category")
+        saveMap.setValue(genreArray, forKey: "genre")
+        saveMap.setValue(titleArray, forKey: "title")
+        saveMap.setValue(memoArray, forKey: "memo")
+        saveMap.setValue(latitudeArray, forKey: "latitude")
+        saveMap.setValue(longitudeArray, forKey: "longitude")
+        
+        print(titleArray)
+    }
+    
+    
     
 }
 

@@ -27,6 +27,11 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     var word2 = String()
     var word3 = String()
     
+    var toMapLatitude :[Double] = []
+    var toMapLongitude :[Double] = []
+    var toMapTitle :[String] = []
+    var toMapMemo :[String] = []
+    
 
     @IBOutlet weak var searchbutton: UIButton!
     
@@ -49,7 +54,11 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         
         if textField1.text == "" || textField2.text == "" || textField3.text == ""{
             alert()
+        }
+        if categoryArray.firstIndex(of: textField1.text!) == nil || (genreArray.firstIndex(of: textField2.text!) == nil){
+            noAlert()
         }else{
+            search()
             self.dismiss(animated: true, completion: nil)
         }
         
@@ -223,6 +232,60 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         present(alert, animated: true, completion: nil)
         
     }
+    
+    func search(){
+        categoryArray = saveMap.object(forKey: "category") as! [String]
+        genreArray = saveMap.object(forKey: "genre") as! [String]
+        titleArray = saveMap.object(forKey: "title") as! [String]
+        memoArray = saveMap.object(forKey: "memo") as! [String]
+        latitudeArray = saveMap.object(forKey: "latitude") as! [Double]
+        longitudeArray = saveMap.object(forKey: "longitude") as! [Double]
+        
+
+        
+        for i in 0..<categoryArray.count{
+            if categoryArray[i] == textField1.text!{
+                if genreArray[i] == textField2.text!{
+                    toMapLatitude.append(latitudeArray[i])
+                    toMapLongitude.append(longitudeArray[i])
+                    toMapTitle.append(titleArray[i])
+                    toMapMemo.append(memoArray[i])
+                }
+            }
+        }
+        
+        if let mapVC = presentingViewController as? MapViewController{
+            if toMapLongitude[0] != 0.00{
+                mapVC.loadLatitude = toMapLatitude
+                mapVC.loadLongitude = toMapLongitude
+                mapVC.loadTitle = toMapTitle
+                mapVC.loadMemo = toMapMemo
+                mapVC.loaded = true
+                mapVC.pinBool = true
+                print("行ってるでー")
+            }
+            
+            
+            
+        }
+        print(toMapLongitude)
+    }
+    
+    func noAlert(){
+        let alert = UIAlertController(title: "NotFound", message: "この内容では保存されていません", preferredStyle: .alert)
+        alert.addAction(
+            UIAlertAction(
+                title: "OK",
+                style: .default,
+                handler: { action in
+                    print("OK")
+                }
+            )
+        )
+        present(alert, animated: true, completion: nil)
+    }
+    
+
 
 }
 
